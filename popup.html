@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prompt-ref</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 360px;
+      background: #09090b;
+      color: #f4f4f5;
+      font-family: "Geist Mono", "Fira Code", monospace;
+      font-size: 12px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid #27272a;
+    }
+
+    header h1 { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+
+    a.settings-link {
+      color: #71717a;
+      text-decoration: none;
+      font-size: 11px;
+    }
+    a.settings-link:hover { color: #a1a1aa; }
+
+    .body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+
+    label { display: flex; flex-direction: column; gap: 4px; }
+    label span { color: #71717a; font-size: 10px; }
+
+    textarea, input, select {
+      background: #18181b;
+      border: 1px solid #3f3f46;
+      border-radius: 6px;
+      color: #f4f4f5;
+      font-family: inherit;
+      font-size: 11px;
+      padding: 7px 9px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    textarea:focus, input:focus, select:focus { border-color: #71717a; }
+    textarea { resize: vertical; line-height: 1.5; }
+
+    select option { background: #18181b; }
+
+    .row { display: flex; gap: 8px; }
+    .row label { flex: 1; }
+
+    button.save {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 6px;
+      background: #f4f4f5;
+      color: #09090b;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 2px;
+    }
+    button.save:hover { background: #e4e4e7; }
+    button.save:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .status {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .status.success { background: #14532d40; color: #86efac; border: 1px solid #16a34a40; display: block; }
+    .status.error { background: #450a0a40; color: #fca5a5; border: 1px solid #dc262640; display: block; }
+
+    #not-configured {
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      text-align: center;
+    }
+    #not-configured p { color: #71717a; line-height: 1.6; }
+    #not-configured a {
+      color: #f4f4f5;
+      font-size: 12px;
+      padding: 6px 14px;
+      border: 1px solid #3f3f46;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    #not-configured a:hover { background: #18181b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>prompt-ref</h1>
+    <a class="settings-link" href="settings.html" target="_blank">settings</a>
+  </header>
+
+  <div id="not-configured" style="display:none">
+    <p>Can't reach Eagle. Make sure Eagle is running with the local API enabled (Preferences → Developer), then reopen.</p>
+    <a href="settings.html" target="_blank">open settings</a>
+  </div>
+
+  <div class="body" id="main-body">
+    <label>
+      <span>prompt text *</span>
+      <textarea id="text" rows="5" placeholder="detected prompt appears here..."></textarea>
+    </label>
+
+    <div class="row">
+      <label>
+        <span>model</span>
+        <input id="model" type="text" placeholder="auto-detected..." list="model-list" />
+        <datalist id="model-list">
+          <option value="Midjourney">
+          <option value="GPT Image 1">
+          <option value="GPT Image 2">
+          <option value="GPT-4o">
+          <option value="DALL-E 3">
+          <option value="Flux">
+          <option value="Stable Diffusion">
+          <option value="Sora">
+          <option value="Runway">
+          <option value="Kling">
+          <option value="Seedance 2.0">
+          <option value="Hailuo">
+          <option value="Veo 2">
+          <option value="Veo 3">
+          <option value="Pika">
+          <option value="Haiper">
+          <option value="HunyuanVideo">
+          <option value="Wan">
+          <option value="Firefly">
+          <option value="Ideogram">
+          <option value="NanoBanana Pro">
+          <option value="NanoBanana">
+          <option value="Happy Horse">
+          <option value="Recraft">
+          <option value="Leonardo">
+        </datalist>
+      </label>
+      <label>
+        <span>title</span>
+        <input id="title" type="text" placeholder="optional..." />
+      </label>
+    </div>
+
+    <label>
+      <span>tags (comma separated)</span>
+      <input id="tags" type="text" placeholder="cinematic, portrait..." />
+    </label>
+
+    <div id="status" class="status"></div>
+
+    <button class="save" id="save-btn">save to Eagle</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
