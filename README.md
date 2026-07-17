@@ -1,6 +1,6 @@
 # Prompt-Ref → Eagle
 
-A free browser extension that scrapes AI-generated prompts (and their images) from X/Twitter, Threads, Midjourney, Civitai, Reddit, and PromptHero, and saves them straight into your [Eagle](https://eagle.cool) library — auto-detecting the model used and filing it into a matching folder.
+A free browser extension that scrapes AI-generated prompts (and their images) from X/Twitter and Threads, and saves them straight into your [Eagle](https://eagle.cool) library — auto-detecting the model used and filing it into a matching folder.
 
 No account, no server, no tracking. It talks directly to Eagle's local API on your machine.
 
@@ -27,7 +27,7 @@ No account, no server, no tracking. It talks directly to Eagle's local API on yo
 
 ## Use
 
-1. Open a post with an AI prompt (X, Threads, Midjourney, Civitai, Reddit, PromptHero — or select text on any other page).
+1. Open a post with an AI prompt (X, Threads — or select text on any other page).
 2. Click the extension icon. It auto-fills the prompt text, detected model, title, and tags.
 3. Edit anything that's wrong, then hit **Save to Eagle**.
 

@@ -147,10 +147,6 @@ const scrapers = {
   "twitter.com": scrapeX,
   "threads.com": scrapeThreads,
   "www.threads.com": scrapeThreads,
-  "midjourney.com": scrapeMidjourney,
-  "civitai.com": scrapeCivitai,
-  "reddit.com": scrapeReddit,
-  "prompthero.com": scrapePromptHero,
 }
 
 function scrapeThreads() {
@@ -265,67 +261,6 @@ function scrapeX() {
     imageUrl: allImages[0] ?? null,
     images: allImages,
     hasVideo,
-  }
-}
-
-function scrapeMidjourney() {
-  const promptEl = document.querySelector('[class*="prompt"], [data-prompt]')
-  const raw = promptEl?.innerText?.trim() ?? promptEl?.dataset?.prompt?.trim()
-  const imgEl = document.querySelector('img[src*="cdn.midjourney.com"]')
-  if (!raw) return null
-  return {
-    text: raw,
-    title: null,
-    imageUrl: imgEl?.src ?? null,
-    model: "Midjourney",
-    tags: [],
-  }
-}
-
-function scrapeCivitai() {
-  const promptEl = document.querySelector('[class*="prompt"], pre, [data-key="prompt"]')
-  const raw = promptEl?.innerText?.trim()
-  const imgEl = document.querySelector('img[src*="image.civitai.com"]')
-  const modelEl = document.querySelector('[class*="model-name"], [class*="modelName"]')
-  if (!raw) return null
-  const modelName = modelEl?.innerText?.trim() ?? detectModel(raw) ?? detectModel(document.title)
-  return {
-    text: raw,
-    title: document.title ?? null,
-    imageUrl: imgEl?.src ?? null,
-    model: modelName,
-    tags: extractTagsFromTitle(document.title, modelName),
-  }
-}
-
-function scrapeReddit() {
-  const postEl = document.querySelector('[data-test-id="post-content"], [slot="text-body"]')
-  const raw = postEl?.innerText?.trim()
-  const imgEl = document.querySelector('img[src*="preview.redd.it"], img[src*="i.redd.it"]')
-  if (!raw) return null
-  const title = document.querySelector('h1')?.innerText?.trim() ?? null
-  const model = detectModel(title) ?? detectModel(raw)
-  return {
-    text: raw,
-    title,
-    imageUrl: imgEl?.src ?? null,
-    model,
-    tags: extractTagsFromTitle(title, model),
-  }
-}
-
-function scrapePromptHero() {
-  const promptEl = document.querySelector('[class*="prompt"]')
-  const raw = promptEl?.innerText?.trim()
-  const imgEl = document.querySelector('img.prompt-image, [class*="hero"] img')
-  if (!raw) return null
-  const model = detectModel(document.title) ?? detectModel(raw)
-  return {
-    text: raw,
-    title: null,
-    imageUrl: imgEl?.src ?? null,
-    model,
-    tags: [],
   }
 }
 
